@@ -6,15 +6,21 @@ document.querySelector('#zipForm').addEventListener
 document.querySelector('body').addEventListener
 ('click', deleteLocation);
 
+let selectedValue;
+function getSelectValue() {
+    selectedValue = document.getElementById("list").value;
+    // console.log(selectedValue);
+}
+
+getSelectValue();
 
 function getLocationInfo(e) {
     // Get zip value from input
-    const zip = document.querySelector('.zip').value;
-
+    zip = document.querySelector('.zip').value;
     // Make request
-    fetch(`http://api.zippopotam.us/us/${zip}`)
+    fetch(`http://api.zippopotam.us/${selectedValue}/${zip}`)
         .then(response => {
-            if (response.status != 200) {
+            if (response.status !== 200) {
                 showIcon('remove');
                 document.querySelector('#output').innerHTML =
                     `<article class="message is-danger"><div class="message-body">Invalid zip code. Please try again!</div></article>`;
@@ -50,6 +56,7 @@ function getLocationInfo(e) {
         })
         .catch(err => console.log(err));
     e.preventDefault();
+
 }
 
 // show check or remove icon
@@ -67,10 +74,10 @@ function showIcon(icon) {
 
 // delete location box
 function deleteLocation(e) {
-    if (e.target.className == 'delete') {
+    if (e.target.className === 'delete') {
         document.querySelector('.message').remove();
         document.querySelector('.zip').value = '';
-        document.querySelector('.icon-check').remove();
+        document.querySelector('.icon-check').style.display = "none";
     }
 
 }
