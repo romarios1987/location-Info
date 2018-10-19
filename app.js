@@ -18,7 +18,7 @@ function getLocationInfo(e) {
     // Get zip value from input
     zip = document.querySelector('.zip').value;
     // Make request
-    fetch(`http://api.zippopotam.us/${selectedValue}/${zip}`)
+    fetch(`https://api.zippopotam.us/${selectedValue}/${zip}`)
         .then(response => {
             if (response.status !== 200) {
                 showIcon('remove');
